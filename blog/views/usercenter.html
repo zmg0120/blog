@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+{% block body %}
+<!-- <h1> 用户中心 </h1> -->
+<p> 欢迎 {{ username }}</p>
+<div style="height: 160px; width: 140px; height: 175px; margin-left: 20px; float: left;">
+	<img src="{{ avatar }}" alt="头像" class="img-circle" style="width: 140px; height: 140px;">
+	<button class="btn btn-default btn-sm" type="submit" style="margin-left: 30px; margin-top: 5px">更改头像</button>
+	<!-- <a class="btn btn-default" href="#" role="button"></a> -->
+</div>
+<div style="width: 300px; margin-left: 20px; float: left;">
+	<h1>我的文章</h1>
+	<ul>
+		{% for data in articals %}
+		<li><a href="/articals/{{ data._id }}">{{ data.title }}</a></li>
+		{% endfor %}
+	</ul>
+</div>
+{% endblock %}

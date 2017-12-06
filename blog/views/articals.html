@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<div style="width: 90%; margin: 5%; margin-top: 20px">
+	<div>
+		<h1>标题：{{ title }}</h1>
+		<h3>作者：{{ username }}</h3>
+		<div style="min-height: 400px; border: 3px solid #CCC;">{{ content | safe }}</div>
+	</div>
+	<h4>用户评论：</h4>
+	{% for com in comment %}
+	<div>
+		<button type="button" class="btn btn-default btn-right" style="margin-top: 10px">{{ com.author }}</button>
+		<textarea class="form-control" rows="2">{{ com.content }}</textarea>
+	</div>
+	{% endfor %}
+	<div style="margin-top: 20px;">
+		<form action="" id="form">
+			<textarea id="content" class="form-control" rows="3"></textarea>
+			<button type="button" class="btn btn-default">提交评论</button>
+		</form>
+	</div>
+</div>
+<script>
+	$(function(){
+		$(":button").click(function(){
+			var content = $("#content").val();
+			var author = '{{ username }}';
+			var articalId = '{{ articalId }}';
+
+			var postData = {
+				content: content,
+				author: author,
+				articalId: articalId
+			}
+			console.log("postData::",postData);
+
+			var sendData = JSON.stringify(postData);
+			$.ajax({
+				url: "/comment",
+				contentType:"application/json",
+				type: "post",
+				data: sendData,
+				success: function(data){
+					console.log("success");
+					// console.log(data);
+					if(data === "true") {
+						window.location.href = "/articals/{{ articalId }}";	
+					}
+				}
+			})
+		});
+	})
+</script>
+{% endblock %}
